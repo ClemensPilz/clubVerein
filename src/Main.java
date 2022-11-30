@@ -7,7 +7,7 @@ public class Main {
         home.addMember("Jazia", "Pilz", "f", true);
         home.addMember("Hansi", "Hinterseer", "x", true);
         home.addMember("Hubert", "Goisern", "y", true);
-        home.distributeParking();
+        home.distributeParkingRandom();
         home.getMemberCount();
         home.printClub();
         System.out.println("-----");

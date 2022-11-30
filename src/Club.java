@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Club {
     private String name;
@@ -29,10 +30,10 @@ public class Club {
     public int getParkingSpaces() {
         return parkingSpaces;
     }
-    //Parking
+
+    //Distributing Parking by shuffling an Array of Members
 
     public void distributeParking() {
-        int spaces = getParkingSpaces();
         ArrayList<Member> winners = new ArrayList<>();
         for (Member member : members) {
             if (member.isVehicleOwner()) {
@@ -40,16 +41,55 @@ public class Club {
             }
         }
 
-        if (spaces < winners.size()) {
+        if (parkingSpaces < winners.size()) {
             Collections.shuffle(winners);
-            winners = new ArrayList<>(winners.subList(0, spaces));
+            winners = new ArrayList<>(winners.subList(0, parkingSpaces));
         }
 
 
         for (Member winner : winners) {
             winner.setSpaceOwner(true);
         }
+
+        printWinners(winners);
     }
+
+
+    public void printWinners(ArrayList<Member> winners) {
+        System.out.println("=====PARKPLATZVERLOSUNG=====");
+        System.out.println("Anzahl der Stellplätze: " + parkingSpaces);
+        int count = getOwnerCount();
+        System.out.println("Mitglieder mit Fahrzeugen: " + count);
+        System.out.println(" ");
+        System.out.println("Folgende Mitglieder bekommen einen Parkplatz");
+        for (Member winner : winners) {
+            winner.printMember();
+        }
+    }
+
+    //Distributing Parking by assigning random values
+    public void distributeParkingRandom() {
+        ArrayList<Member> winners = new ArrayList<>();
+        for (Member member : members) {
+            if (member.isVehicleOwner()) {
+                winners.add(member);
+            }
+        }
+
+        if (parkingSpaces < winners.size()) {
+            Random ran = new Random();
+            while (parkingSpaces < winners.size()) {
+                winners.remove(ran.nextInt(winners.size()));
+            }
+        }
+
+        for (Member winner : winners) {
+            winner.setSpaceOwner(true);
+        }
+
+        printWinners(winners);
+    }
+
 
     //Mitgliederverwaltung
     public void addMember(String firstname, String lastname, String sex, boolean vehicleOwner) {
@@ -67,6 +107,7 @@ public class Club {
             if (members.get(i).isVehicleOwner()) {
                 v++;
             }
+            i++;
         }
         return v;
     }

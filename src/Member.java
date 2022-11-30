@@ -78,9 +78,12 @@ public class Member {
             newMemberId.append(id);
             i++;
         }
-        System.out.println(newMemberId);
         return newMemberId.toString();
     }
+
+    /*
+    asdfasdfasdf String formatted = String.format("%03d", num); https://stackoverflow.com/questions/275711/add-leading-zeroes-to-number-in-java
+     */
 
 
     public void setSex(String sex) {
